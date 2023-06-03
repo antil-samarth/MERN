@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import {useGroupContext} from '../hooks/useGroupContext';
+import {useAuthContext} from '../hooks/useAuthContext';
 
 // components
 import GroupDetails from "../components/GroupDetails"
@@ -7,10 +8,15 @@ import GroupFrom from "../components/GroupForm"
 
 const Home = () => {
   const {groups, dispatch} = useGroupContext();
+  const {user} = useAuthContext();
 
   useEffect(() => {
     const fetchgroups = async () => {
-      const response = await fetch('/api/groups')
+      const response = await fetch('/api/groups', {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
       const json = await response.json()
 
       if (response.ok) {
@@ -19,8 +25,10 @@ const Home = () => {
       }
     }
 
-    fetchgroups()
-  }, [dispatch])
+    if (user) {
+      fetchgroups();
+    }
+  }, [dispatch, user])
 
   return (
     <div className="home">

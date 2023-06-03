@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 
 //get all groups
 const getAllGroups = async (req, res) => {
-    const groups = await Group.find({}).sort({ createdAt: -1 });
+    const user_id = req.user._id;
+
+    const groups = await Group.find({user_id}).sort({ createdAt: -1 });
     res.status(200).json({ groups });
 };
 
@@ -37,7 +39,8 @@ const createGroup = async (req, res) => {
     }
 
     try {
-        const group = await Group.create({groupId,groupName});
+        const user_id = req.user._id;
+        const group = await Group.create({groupId,groupName, user_id});
         res.status(200).json({ group });
     } catch (error) {
         res.status(400).json({ error: error.message });

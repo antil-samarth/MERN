@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {useGroupContext} from '../hooks/useGroupContext';
+import {useAuthContext} from '../hooks/useAuthContext';
 
 const GroupForm = () => {
     const {dispatch} = useGroupContext();
@@ -7,14 +8,24 @@ const GroupForm = () => {
     const [groupId, setId] = useState('');
     const [error, setError] = useState('');
     const [emptyFields, setEmptyFields] = useState([]);
+    const {user} = useAuthContext();
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+
+        if(!user){
+            setError('You must be logged in to create a group.');
+            return;
+        }
+
         const group = { groupName, groupId };
 
         const res = await fetch('/api/groups', {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",                
+                'Authorization': `Bearer ${user.token}`
+            },
             body: JSON.stringify(group)
         });
         const json = await res.json();
@@ -27,7 +38,7 @@ const GroupForm = () => {
             setName('');
             setId('');
             setError(null);
-            setEmptyFields(null);
+            setEmptyFields([]);
             console.log('new group added', json);
             dispatch({type: 'ADD_GROUP', payload: group});
         }

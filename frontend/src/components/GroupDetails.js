@@ -1,13 +1,23 @@
 import {useGroupContext} from '../hooks/useGroupContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 const GroupDetails = ({ group }) => {
     const { dispatch } = useGroupContext();
-
+    const { user } = useAuthContext();
     const handleClick = async () => {
+        
+        if (!user) {
+            console.log('You must be logged in to delete a group.');
+            return;
+        }
+
         const res = await fetch('/api/groups/' + group._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         });
         const data = await res.json();
         console.log(data.group);
@@ -22,7 +32,8 @@ const GroupDetails = ({ group }) => {
         <div className="group-details">
             <h2>{group.groupName}</h2>
             <p>{group.groupId}</p>
-            <p>{formatDistanceToNow(new Date(group.createdAt), { addSuffix: true})}</p>
+            <p>{((group.createdAt) ? formatDistanceToNow(new Date(group.createdAt), { addSuffix: true}): null)
+            /*()=>{if (group.createdAt) {formatDistanceToNow(new Date(group.createdAt), { addSuffix: true})}}*/}</p>
             <span className='material-symbols-outlined' onClick={handleClick}>delete</span>
         </div>
     )

@@ -3,6 +3,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
 const groutes = require('./routes/api');
+const uroutes = require('./routes/user');
+
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/groups', groutes);
+app.use('/api/user', uroutes);
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

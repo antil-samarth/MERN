@@ -6,8 +6,7 @@ export const groupReducer = (state, action) => {
     switch(action.type) {
         case 'ADD_GROUP':
             return {
-                ...state,
-                groups: [action.payload, ...state.groups, action.payload]
+                groups: [action.payload, ...state.groups]
             }
         case 'SET_GROUPS':
             return {

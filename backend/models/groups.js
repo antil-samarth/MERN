@@ -11,7 +11,11 @@ const groupSchema = new mongoose.Schema({
   groupName: {
     type: String,
     required: true
-  }, 
+  },
+  user_id: {
+    type: String,
+    required: true
+  }
   /*members: [
     {
       name: {
