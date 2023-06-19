@@ -13,7 +13,7 @@ const GroupDetails = ({ group }) => {
             return;
         }
 
-        const res = await fetch('/api/groups/' + group._id, {
+        const res = await fetch('https://mern-app-production-e81b.up.railway.app:4000/api/groups/' + group._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`

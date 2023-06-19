@@ -12,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchgroups = async () => {
-      const response = await fetch('/api/groups', {
+      const response = await fetch('https://mern-app-production-e81b.up.railway.app:4000/api/groups', {
         headers: {
           'Authorization': `Bearer ${user.token}`
         }
