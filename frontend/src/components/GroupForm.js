@@ -54,7 +54,7 @@ const GroupForm = () => {
                 type='text'
                 onChange={(e) => setName(e.target.value)}
                 value = {groupName}
-                className='{emptyFields.includes("groupName") ? "error" : ""}'
+                className={emptyFields.includes("groupName") ? "error" : ""}
             />
             <label>Group Id</label>
             <input
