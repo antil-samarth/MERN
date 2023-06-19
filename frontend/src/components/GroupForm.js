@@ -20,7 +20,7 @@ const GroupForm = () => {
 
         const group = { groupName, groupId };
 
-        const res = await fetch('/api/groups', {
+        const res = await fetch('https://mern-app-production-e81b.up.railway.app:4000/api/groups', {
             method: 'POST',
             headers: { 
                 "Content-Type": "application/json",                
