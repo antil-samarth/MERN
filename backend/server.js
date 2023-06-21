@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const express = require('express');
+const cors = require('cors');
+
 const groutes = require('./routes/api');
 const uroutes = require('./routes/user');
 
@@ -9,6 +11,9 @@ const uroutes = require('./routes/user');
 const app = express();
 
 app.use(express.json());
+app.use(cors({
+    origin: process.env.CORS_ORIGIN
+}));
 
 app.use((req, res, next) => {
     console.log('Hello from the middleware 👋', req.path, req.method);
