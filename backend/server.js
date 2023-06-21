@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-    origin: process.env.CORS_ORIGIN
+    origin: '*', // allow to server to accept request from different origin
 }));
 
 app.use((req, res, next) => {
