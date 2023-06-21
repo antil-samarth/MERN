@@ -1,5 +1,4 @@
 {
-  "proxy": "https://mern-app-production-e81b.up.railway.app",
   "name": "frotend",
   "version": "0.1.0",
   "private": true,
